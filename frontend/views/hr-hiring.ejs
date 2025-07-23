@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hire Employees</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f7f6;
+      display: flex;
+    }
+
+    .sidebar {
+      width: 200px;
+      height: 100vh;
+      background: #34000b;
+      padding: 20px;
+      color: white;
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar h3 {
+      margin-top: 0;
+      margin-bottom: 20px;
+    }
+
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+
+    .sidebar a:hover {
+      background: #520015;
+    }
+
+    .main-content {
+      margin-left: 220px;
+      flex-grow: 1;
+      padding: 20px;
+    }
+
+    .navbar {
+      background: #34000b;
+      padding: 15px;
+      color: white;
+      font-size: 22px;
+      margin-left: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 10px;
+      margin-bottom: 30px;
+    }
+
+    .navbar a {
+      color: #34000b;
+      background-color: white;
+      padding: 8px 15px;
+      border-radius: 5px;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .navbar a:hover {
+      background-color: #34000b;
+      color: white;
+    }
+
+    .container {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #34000b;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      width: 300px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+
+    th {
+      background-color: #34000b;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <h3>HR Panel</h3>
+    <a href="/hr/hr-Dashboard">Dashboard</a>
+    <a href="/hr/task-calendar">Task Calendar</a>
+    <a href="/hr/hiring">Hire Employees</a>
+    <a href="/hr/announcements" id="announcementHeader">Company Announcements</a>
+
+  </div>
+
+  <div class="main-content">
+    <div class="navbar">
+      <span>Hire Employees</span>
+      <a href="/hr/logout">Logout</a>
+    </div>
+
+    <div class="container">
+      <h1>Applicant List</h1>
+      <input type="text" id="roleSearch" placeholder="Search by Role..." onkeyup="filterTable()" />
+
+      <table id="employeeTable">
+        <thead>
+          <tr>
+            <th>Application No.</th>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>APP001</td>
+            <td>Amit Sharma</td>
+            <td>Software Engineer</td>
+            <td>amit@gmail.com</td>
+            <td>9041935078</td>
+            <td><a href="/hr/view-profile?app=APP001" class="view-btn">View</a></td>
+          </tr>
+          <tr>
+            <td>APP002</td>
+            <td>Priya Singh</td>
+            <td>QA Analyst</td>
+            <td>priya_9@gmail.com</td>
+            <td>9876259083</td>
+            <td><a href="/hr/view-profile?app=APP002" class="view-btn">View</a></td>
+          </tr>
+          <tr>
+            <td>APP003</td>
+            <td>Ravi Mehta</td>
+            <td>UI/UX Designer</td>
+            <td>ravi569@gmail.com</td>
+            <td>9432121703</td>
+            <td><a href="/hr/view-profile?app=APP003" class="view-btn">View</a></td>
+          </tr>
+          <tr>
+            <td>APP004</td>
+            <td>Neha Verma</td>
+            <td>Marketing Executive</td>
+            <td>nehaverma09@gmail.com</td>
+            <td>9876543213</td>
+            <td><a href="/hr/view-profile?app=APP004" class="view-btn">View</a></td>
+          </tr>
+          <tr>
+            <td>APP005</td>
+            <td>Rohan Kapoor</td>
+            <td>Software Engineer</td>
+            <td>rohan_kpr@gmail.com</td>
+            <td>9654071890</td>
+            <td><a href="/hr/view-profile?app=APP005" class="view-btn">View</a></td>
+          </tr>
+          <tr>
+            <td>APP006</td>
+            <td>Anjali Nair</td>
+            <td>Customer Support Executive</td>
+            <td>anjali_30@gmail.com</td>
+            <td>9215380837</td>
+            <td><a href="/hr/view-profile?app=APP006" class="view-btn">View</a></td>
+          </tr>
+          <tr>
+            <td>APP007</td>
+            <td>Sumit Yadav</td>
+            <td>Data Scientist</td>
+            <td>sumit01@gmail.com</td>
+            <td>9876543216</td>
+            <td><a href="/hr/view-profile?app=APP007" class="view-btn">View</a></td>
+          </tr>
+          <tr>
+            <td>APP008</td>
+            <td>Swati Chauhan</td>
+            <td>QA Analyst</td>
+            <td>swati_chauhan@gmail.com</td>
+            <td>9181511588</td>
+            <td><a href="/hr/view-profile?app=APP008" class="view-btn">View</a></td>
+          </tr>
+          <tr>
+            <td>APP009</td>
+            <td>Karan Thakur</td>
+            <td>Marketing Executive</td>
+            <td>karan12@gmail.com</td>
+            <td>9501324876</td>
+            <td><a href="/hr/view-profile?app=APP009" class="view-btn">View</a></td>
+          </tr>
+          <tr>
+            <td>APPP010</td>
+            <td>Deepika Joshi</td>
+            <td>Software Engineer</td>
+            <td>deepika0@gmail.com</td>
+            <td>9290130567</td>
+            <td><a href="/hr/view-profile?app=APP010" class="view-btn">View</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    function filterTable() {
+      const input = document.getElementById("roleSearch");
+      const filter = input.value.toLowerCase();
+      const table = document.getElementById("employeeTable");
+      const trs = table.getElementsByTagName("tr");
+
+      for (let i = 1; i < trs.length; i++) {
+        const td = trs[i].getElementsByTagName("td")[2];
+        if (td) {
+          const txtValue = td.textContent || td.innerText;
+          trs[i].style.display = txtValue.toLowerCase().includes(filter) ? "" : "none";
+        }
+      }
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Announcements</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #c29b87;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #34000b;
+      margin-bottom: 30px;
+    }
+
+    form {
+      background-color: #f6f2ea;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 600px;
+      margin: 0 auto 30px auto;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    input[type="text"],
+    textarea,
+    input[type="file"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    label {
+      font-weight: bold;
+      color: #34000b;
+    }
+
+    button {
+      background-color: #34000b;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #1f0007;
+    }
+
+    hr {
+      margin: 40px auto;
+      max-width: 600px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    li {
+      background-color: #f6f2ea;
+      margin-bottom: 15px;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    li strong {
+      display: block;
+      color: #34000b;
+      font-size: 1.1rem;
+    }
+
+    li em {
+      display: block;
+      color: #777;
+      font-size: 0.9rem;
+      margin-top: 5px;
+    }
+
+    a {
+      color: #34000b;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    p {
+      text-align: center;
+      font-style: italic;
+      color: #5f4d45;
+    }
+
+    .file-name {
+      font-size: 0.9rem;
+      color: #555;
+      margin-top: -10px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Announcements</h1>
+
+  <form method="POST" action="/api/admin/announcements" enctype="multipart/form-data">
+    <input type="text" name="title" placeholder="Title" required>
+    <textarea name="message" placeholder="Announcement message" required></textarea>
+    
+    <label for="attachment">Attach PDF or Image:</label>
+    <input type="file" name="attachment" id="attachment" accept=".pdf,image/*" onchange="showFileName()">
+    <div id="fileName" class="file-name"></div>
+
+    <button type="submit">Add Announcement</button>
+  </form>
+
+  <hr>
+
+  <% if (announcements.length === 0) { %>
+    <p>No announcements yet.</p>
+  <% } else { %>
+    <ul>
+      <% announcements.forEach(a => { %>
+        <li>
+          <strong><%= a.title %></strong>
+          <span><%= a.message %></span>
+          <em>(<%= a.date.toDateString() %>)</em>
+          <% if (a.attachmentUrl) { %>
+            <details>
+              <summary>View Attachment</summary>
+              <a href="<%= a.attachmentUrl %>" target="_blank">Open file</a>
+            </details>
+          <% } %>
+        </li>
+      <% }) %>
+    </ul>
+  <% } %>
+
+  <script>
+    function showFileName() {
+      const fileInput = document.getElementById('attachment');
+      const fileNameDiv = document.getElementById('fileName');
+      if (fileInput.files.length > 0) {
+        fileNameDiv.textContent = "Selected: " + fileInput.files[0].name;
+      } else {
+        fileNameDiv.textContent = "";
+      }
+    }
+  </script>
+</body>
+</html>

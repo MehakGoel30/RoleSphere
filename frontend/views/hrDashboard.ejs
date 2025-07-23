@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Dashboard</title>
+    <style>
+         body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        height: 100vh;
+    }
+    .sidebar {
+        width: 200px;
+        height: 100vh;
+        background: #34000b;
+        padding: 20px;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+    }
+
+    .sidebar a {
+        color: white;
+        text-decoration: none;
+        padding: 10px;
+        display: block;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        transition: background 0.3s;
+    }
+
+    .sidebar a:hover {
+        background: #c0392b;
+    }
+
+    .main-content {
+        margin-left: 250px;
+        flex-grow: 1;
+        padding: 20px;
+        overflow-y: auto;
+    }
+
+    .navbar {
+        background: #34000b;
+        padding: 15px;
+        color: #fff;
+        font-size: 22px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-radius: 10px;
+        margin-bottom: 30px;
+    }
+
+    .navbar a {
+        color: #34000b;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 20px;
+        padding: 8px 15px;
+        background-color: white;
+        border-radius: 5px;
+        transition: 0.3s;
+    }
+
+    .navbar a:hover {
+        background-color: #c0392b;
+        color: white;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: auto;
+        background: rgb(240, 228, 228);
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
+        text-align: center;
+    }
+
+        h1 {
+            color: #34000b;
+            font-size: 28px;
+            text-align: center;
+        }
+
+        p {
+            color: #000000;
+            font-size: 20px;
+            text-align: center;
+        }
+        h2 {
+            color: #34000b;
+            font-size: 28px;
+            margin-top: 30px;
+            text-align: center;
+        }
+        h3 {
+            color: white;
+            font-size: 28px;
+            margin-top: 30px;
+            text-align: center;
+        }
+        h4 {
+            color: #34000b;
+            font-size: 28px;
+            margin-top: 30px;
+            text-align: center;
+        }
+        .btn {
+            padding: 10px 15px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-add {
+            background-color: #34000b;
+            color: white;
+        }
+
+        .btn-add:hover {
+            background-color: #34000b;
+        }
+
+        
+
+        .btn-view {
+            background-color: #34000b;
+            color: white;
+        }
+
+        .btn-view:hover {
+            background-color: #34000b;
+        }
+
+        .btn-edit {
+            background-color: #34000b;
+            color: white;
+        }
+
+        .btn-edit:hover {
+            background-color: #34000b;
+        }
+
+        .form-container {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgb(240, 228, 228);
+            border-radius: 10px;
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #bdc3c7;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #34000b;
+            color: white;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <h3>HR Panel</h3>
+        <a href="/hr/apply-leave">Apply Leave</a>
+        <a href="/hr/task-calendar">Task Calendar</a>
+        <a href="/hr/hiring">Hire Employees</a>
+        <a href="/hr/announcements" id="announcementHeader">Company Announcements</a>
+
+
+    </div>
+    <div class="main-content">
+    <div class="navbar">
+        <span>HR Dashboard</span>
+        <a href="/hr/logout">Logout</a>
+    </div>
+
+    <div class="container">
+        <h1>Welcome!</h1>
+        <p>Your HR portal is ready.</p>
+        <button class="btn btn-add" id="showFormBtn">Add Employee</button>
+
+        <div class="form-container" id="employeeForm">
+            <h4>Enter Employee Details</h4>
+            <form id="addEmployeeForm">
+                <input type="text" name="name" placeholder="Employee Name" required>
+                <input type="email" name="email" placeholder="Employee Email" required>
+                <input type="text" name="role" placeholder="Employee Role" required>
+                <input type="text" name="department" placeholder="Department" required>
+                <input type="number" name="salary" placeholder="Salary" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="submit" class="btn btn-add">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <h2>Employee List</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>S No</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Department</th>
+                <th>Salary</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="employeeList"></tbody>
+    </table>
+    <!-- Edit Employee Form -->
+    <div class="form-container" id="editEmployeeForm">
+        <h4>Edit Employee Details</h4>
+        <form id="updateEmployeeForm">
+            <input type="hidden" id="editEmployeeId">
+            <input type="text" id="editName" placeholder="Employee Name" required>
+            <input type="email" id="editEmail" placeholder="Employee Email" required>
+            <input type="text" id="editRole" placeholder="Employee Role" required>
+            <input type="text" id="editDepartment" placeholder="Department" required>
+            <input type="number" id="editSalary" placeholder="Salary" required>
+            <input type="password" id="editPassword" placeholder="New Password (leave blank if unchanged)">
+            <button type="submit" class="btn btn-add">Update</button>
+        </form>
+    </div>
+    </div>
+    <script>
+        document.getElementById("showFormBtn").addEventListener("click", function () {
+            const form = document.getElementById("employeeForm");
+            form.style.display = form.style.display === "none" ? "block" : "none";
+        });
+
+        async function fetchEmployees() {
+            const response = await fetch("/hr/employees");
+            const employees = await response.json();
+            const employeeList = document.getElementById("employeeList");
+            employeeList.innerHTML = ""; // Clear previous content
+
+            employees.forEach((employee, index) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${employee.name}</td>
+                    <td>${employee.email}</td>
+                    <td>${employee.role}</td>
+                    <td>${employee.department}</td>
+                    <td>${employee.salary}</td>
+                    <td>
+                        <button class="btn btn-view" onclick="viewEmployee('${employee._id}')">View</button>
+                        <button class="btn btn-edit" onclick="editEmployee('${employee._id}', '${employee.name}', '${employee.email}', '${employee.role}', '${employee.department}', '${employee.salary}')">Edit</button>
+
+
+                    </td>
+                `;
+                employeeList.appendChild(row);
+            });
+        }
+
+        function viewEmployee(employeeId) {
+            window.open(`/hr/view-employee/${employeeId}`, "_blank");
+        }
+
+
+        function editEmployee(id, name, email, role, department, salary,password) {
+            document.getElementById("editEmployeeId").value = id;
+            document.getElementById("editName").value = name;
+            document.getElementById("editEmail").value = email;
+            document.getElementById("editRole").value = role;
+            document.getElementById("editDepartment").value = department;
+            document.getElementById("editSalary").value = salary;
+            document.getElementById("editPassword").value = password;
+            document.getElementById("editEmployeeForm").style.display = "block";
+        }
+
+        document.getElementById("updateEmployeeForm").addEventListener("submit", async function (event) {
+            event.preventDefault();
+            const id = document.getElementById("editEmployeeId").value;
+            const updatedEmployee = {
+                name: document.getElementById("editName").value,
+                email: document.getElementById("editEmail").value,
+                role: document.getElementById("editRole").value,
+                department: document.getElementById("editDepartment").value,
+                salary: document.getElementById("editSalary").value
+            };
+            const password = document.getElementById("editPassword").value;
+    if (password) {
+        updatedEmployee.password = password;
+    }
+            const response = await fetch(`/hr/edit-employee/${id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(updatedEmployee)
+            });
+
+            if (response.ok) {
+                alert("Employee updated successfully!");
+                document.getElementById("editEmployeeForm").style.display = "none";
+                fetchEmployees();
+            } else {
+                alert("Error updating employee");
+            }
+        });
+        async function addEmployee(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData.entries());
+
+            const response = await fetch("/hr/add-employee", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+            if (result.message) {
+                fetchEmployees();
+                document.getElementById("employeeForm").style.display = "none";
+                event.target.reset();
+            } else {
+                alert(result.error);
+            }
+        }
+
+
+        async function deleteEmployee(employeeId) {
+            await fetch(`/hr/delete-employee/${employeeId}`, { method: "DELETE" });
+            fetchEmployees();
+        }
+
+        document.getElementById("addEmployeeForm").addEventListener("submit", addEmployee);
+        fetchEmployees();
+
+        async function fetchAnnouncements() {
+        try {
+            const response = await fetch('/announcements');
+            const announcements = await response.json();
+            
+            // Get the announcement list element
+            const announcementList = document.getElementById("announcementList");
+            announcementList.innerHTML = ""; // Clear existing content
+
+            // Loop through the fetched announcements and display them
+            announcements.forEach(item => {
+                const li = document.createElement("li");
+                li.textContent = `${item.title}: ${item.content}`;
+                announcementList.appendChild(li);
+            });
+        } catch (error) {
+            console.error("Error fetching announcements:", error);
+        }
+    }
+
+    // Add click event listener to the announcements header
+    document.getElementById("announcementHeader").addEventListener("click", function () {
+    window.location.href = "/hr/announcements";
+});
+//     const container = document.getElementById("announcementListContainer");
+
+//     // Toggle visibility
+//     if (container.style.display === "none") {
+//         fetchAnnouncements();
+//         container.style.display = "block";
+//     } else {
+//         container.style.display = "none";
+//     }
+// });
+
+    </script>
+</body>
+
+</html>

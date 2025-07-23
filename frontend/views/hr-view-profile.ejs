@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Employee Profile</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      text-align: center;
+    }
+    .sidebar {
+      width: 200px;
+      height: 100vh;
+      background: #34000b;
+      padding: 20px;
+      color: white;
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .sidebar h3 {
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+    .sidebar a:hover {
+      background: #520015;
+    }
+    .main-content {
+      margin-left: 220px;
+      flex-grow: 1;
+      padding: 20px;
+    }
+    .navbar {
+      background: #34000b;
+      padding: 15px;
+      color: white;
+      font-size: 22px;
+      margin-left: 20px;
+      width: 1200px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 10px;
+      margin-bottom: 30px;
+    }
+    .navbar a {
+      color: #34000b;
+      background-color: white;
+      padding: 8px 15px;
+      border-radius: 5px;
+      font-weight: bold;
+      text-decoration: none;
+    }
+    .navbar a:hover {
+      background-color: #34000b;
+      color: white;
+    }
+    .container {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+      width: 400px;
+      height: 400px;
+      margin: 50px auto;
+    }
+    .profile-header {
+      text-align: center;
+      font-size: 28px;
+      margin-top: 50px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #34000b;
+    }
+    .profile-info {
+      font-size: 18px;
+      margin-bottom: 15px;
+      padding: 10px;
+      margin-top: 40px;
+      border-radius: 5px;
+      background: #e9c9d0;
+    }
+    .profile-info strong {
+      margin-right: 10px;
+      margin-left: 20px;
+    }
+    .profile-info p {
+      margin-bottom: 20px;
+    }
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .btn-back {
+      background: #34000b;
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 5px;
+      display: inline-block;
+      margin-top: 20px;
+    }
+    .btn-back:hover {
+      background: #520015;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h3>HR Panel</h3>
+        <a href="/hr/hr-Dashboard">Dashboard</a>
+        <a href="/hr/task-calendar">Task Calendar</a>
+        <a href="/hr/hiring">Hire Employees</a>
+        <a href="/hr/announcements" id="announcementHeader">Company Announcements</a>
+
+      </div>
+    
+      <div class="main-content">
+        <div class="navbar">
+          <span>Hire Employees</span>
+          <a href="/hr/logout">Logout</a>
+        </div>
+  <div class="container">
+    <div class="profile-header">
+      Profile of <%= employee.name %>
+    </div>
+    <div class="profile-info">
+      <p><strong>Application No.:</strong> <%= employee.applicationNo %></p>
+      <p><strong>Role:</strong> <%= employee.role %></p>
+      <p><strong>Email:</strong> <%= employee.email %></p>
+      <p><strong>Phone:</strong> <%= employee.phone %></p>
+    </div>
+    <div class="button-group">
+        <a href="/hr/hiring" class="btn-back">Back to List</a>
+        <a href="#" id="hireBtn" class="btn-back" style="background-color: green;" onclick="hireEmployee()">Hire</a>
+        <a href="#" id="rejectBtn" class="btn-back" style="background-color: red;" onclick="rejectEmployee()">Reject</a> 
+        <a href="#" id="hiredBtn" class="btn-back hidden" style="background-color: green;">Hired</a>
+        <a href="#" id="rejectedBtn" class="btn-back hidden" style="background-color: red;">Rejected</a>
+      </div>      
+  </div>
+</body>
+<script>
+  function hireEmployee() {
+    // Hide Hire and Reject buttons
+    document.getElementById("hireBtn").classList.add("hidden");
+    document.getElementById("rejectBtn").classList.add("hidden");
+    // Show Hired button
+    document.getElementById("hiredBtn").classList.remove("hidden");
+    // Optionally, you can make an AJAX request here to update the status in the database
+  }
+
+  function rejectEmployee() {
+    // Hide Hire and Reject buttons
+    document.getElementById("hireBtn").classList.add("hidden");
+    document.getElementById("rejectBtn").classList.add("hidden");
+    // Show Rejected button
+    document.getElementById("rejectedBtn").classList.remove("hidden");
+    // Optionally, you can make an AJAX request here to update the status in the database
+  }
+</script>
+</html>

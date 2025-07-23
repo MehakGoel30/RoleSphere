@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manager Dashboard</title>
+    <style>
+      html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #d6c7c7;
+    color: #333;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.navbar {
+    background-color: #34000b;
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+}
+
+.navbar li {
+    display: inline;
+}
+
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.navbar a:hover {
+    background-color: #5e0000;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 30px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    text-align: center;
+}
+
+h1 {
+    background-color: #34000b;
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px 10px 0 0;
+    margin-bottom: 20px;
+    font-size: 2.2em;
+    text-align: center;
+}
+
+a.button {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #34000b;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+    text-align: center;
+}
+
+a.button:hover {
+    background-color: #5e0000;
+}
+
+h2 {
+    color: #34000b;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+    font-size: 1.8em;
+    text-align: center;
+}
+
+/* Base table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+/* First table style */
+table th {
+    background-color: #34000b;
+    color: white;
+    font-weight: 500;
+    padding: 12px 15px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+table td {
+    padding: 12px 15px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tr:hover {
+    background-color: #f0f0f0;
+}
+
+/* Second table style */
+table + table {
+    background-color: #f8f5f2;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+table + table th {
+    background-color: #5e0000;
+    border: 1px solid #d5c9c2;
+}
+
+table + table td {
+    border: 1px solid #d5c9c2;
+}
+
+table + table tr:nth-child(even) {
+    background-color: #f1ece8;
+}
+
+table + table tr:hover {
+    background-color: #e9e3de;
+}
+
+/* Third table style */
+table + table + table {
+    background-color: #f0e6e6;
+    box-shadow: 0 2px 4px rgba(84, 0, 0, 0.1);
+}
+
+table + table + table th {
+    background-color: #7a0000;
+    border: 1px solid #e0c9c9;
+}
+
+table + table + table td {
+    border: 1px solid #e0c9c9;
+}
+
+table + table + table tr:nth-child(even) {
+    background-color: #f5e8e8;
+}
+
+table + table + table tr:hover {
+    background-color: #eedddd;
+}
+
+.approve-btn {
+    background-color: #4caf50;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.approve-btn:hover {
+    background-color: #45a049;
+}
+
+.reject-btn {
+    background-color: #f44336;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.reject-btn:hover {
+    background-color: #d32f2f;
+}
+
+button {
+    padding: 8px 16px;
+    background-color: #34000b;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #5e0000;
+}
+
+.remove-btn {
+    background-color: #34000b;
+}
+
+.remove-btn:hover {
+    background-color: #5e0000;
+}
+
+#assignTaskForm,
+#reviewFormContainer {
+    display: grid;
+    gap: 15px;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 25px;
+    background: #c29b87;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    border: 1px solid #b08a76;
+}
+
+#assignTaskForm label,
+#reviewFormContainer label {
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #34000b;
+}
+
+#assignTaskForm input,
+#assignTaskForm select,
+#assignTaskForm textarea,
+#reviewFormContainer input,
+#reviewFormContainer textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+}
+
+#assignTaskForm input:focus,
+#assignTaskForm select:focus,
+#assignTaskForm textarea:focus,
+#reviewFormContainer input:focus,
+#reviewFormContainer textarea:focus {
+    outline: none;
+    border-color: #5e0000;
+    box-shadow: 0 0 0 0.2rem rgba(84, 0, 0, 0.25);
+}
+
+#assignTaskForm button,
+#reviewFormContainer button {
+    background-color: #34000b;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+#assignTaskForm button:hover,
+#reviewFormContainer button:hover {
+    background-color: #5e0000;
+}
+
+#reviewFormContainer {
+    display: none;
+}
+
+.assigned-tasks-table {
+    margin-top: 30px;
+}
+
+.assigned-tasks-table td,
+.assigned-tasks-table th {
+    padding: 15px;
+}
+
+#reportActionModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1050;
+    overflow-y: auto;
+}
+
+#reportActionModal > div {
+    background: white;
+    width: 90%;
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#reportActionModal h3 {
+    color: #34000b;
+    margin-top: 0;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+#reportActionModal .input-group {
+    margin-bottom: 15px;
+}
+
+#reportActionModal label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #34000b;
+}
+
+#reportActionModal select,
+#reportActionModal textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+#reportActionModal button {
+    background-color: #34000b;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-right: 10px;
+}
+
+#reportActionModal button:last-child {
+    margin-right: 0;
+    background-color: #6c757d;
+}
+
+#reportActionModal button:hover {
+    background-color: #5e0000;
+}
+
+#reportActionModal button:last-child:hover {
+    background-color: #545b62;
+}
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <ul>
+        <li><a href="#allEmployees">All Employees</a></li>
+        <li><a href="#myTeam">My Team</a></li>
+        <li><a href="#assignTask">Assign Task</a></li>
+        <li><a href="#assignedTasks">Assigned Tasks</a></li>
+        <li><a href="#employeePerformance">Employee Performance</a></li>
+        <li><a href="#leaveApprovals">Leave Approvals</a></li>
+      </ul>
+    </nav>
+
+    <div class="container">
+      <% if (manager) { %>
+      <h1>Welcome <%= manager.name %> Manager</h1>
+      <!-- <p>Email: <%= manager.email %></p> -->
+      <% } else { %>
+      <h1>Manager Dashboard</h1>
+      <p>Error: Manager data not found.</p>
+      <% } %>
+
+      <a class="button" href="/manager/logout">Logout</a>
+
+      <!-- Add Team Section -->
+      <h2 id="allEmployees">All Employees</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="employeeList">
+          <% if (employees && employees.length > 0) { %> <%
+          employees.forEach(employee => { %>
+          <tr>
+            <td><%= employee.name %></td>
+            <td><%= employee.email %></td>
+            <td>
+              <button
+                onclick="addToTeam('<%= employee._id %>', '<%= employee.name %>', '<%= employee.email %>')"
+              >
+                Add to My Team
+              </button>
+              <button
+                onclick="addReviewForm('<%= employee._id %>', '<%= employee.name %>')"
+              >
+                Add Review
+              </button>
+            </td>
+          </tr>
+          <% }) %> <% } else { %>
+          <tr>
+            <td colspan="3">No employees found.</td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+
+      <!-- Review Form -->
+      <div id="reviewFormContainer">
+        <h2>Submit Review</h2>
+        <form id="reviewForm">
+          <label for="tasksCompleted">Tasks Completed:</label>
+          <input type="number" id="tasksCompleted" required /><br />
+
+          <label for="averageRating">Average Rating (1-5):</label>
+          <input
+            type="number"
+            id="averageRating"
+            min="1"
+            max="5"
+            required
+          /><br />
+
+          <label for="remarks">Remarks:</label>
+          <textarea id="remarks" required></textarea><br />
+
+          <button type="submit">Submit Review</button>
+          <button type="button" onclick="cancelReview()">Cancel</button>
+        </form>
+      </div>
+
+      <!-- My Team Section -->
+      <h2 id="myTeam">My Team</h2>
+      <table id="myTeamTable">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="myTeamList">
+        </tbody>
+      </table>
+
+      <!-- Task Assignment Section -->
+      <h2 id="assignTask">Assign Task</h2>
+      <form id="assignTaskForm">
+        <label for="employee">Select Employee:</label>
+        <select id="employee" required>
+          <% employees.forEach(employee => { %>
+          <option value="<%= employee._id %>"><%= employee.name %></option>
+          <% }) %></select
+        ><br />
+
+        <label for="title">Task Title:</label>
+        <input type="text" id="title" required /><br />
+
+        <label for="description">Description:</label>
+        <textarea id="description" required></textarea><br />
+
+        <label for="deadline">Deadline:</label>
+        <input type="datetime-local" id="deadline" required /><br />
+
+        <button type="submit">Assign Task</button>
+      </form>
+
+      <h2 id="assignedTasks">Assigned Tasks</h2>
+      <table class="assigned-tasks-table">
+        <thead>
+          <tr>
+            <th>Employee</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Deadline</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="taskList"></tbody>
+      </table>
+
+      <!-- Performance Table -->
+      <h2 id="employeePerformance">Employee Performance</h2>
+      <table class="assigned-tasks-table">
+        <thead>
+          <tr>
+            <th>Employee</th>
+            <th>Tasks Completed</th>
+            <th>Average Rating</th>
+            <th>Remarks</th>
+          </tr>
+        </thead>
+        <tbody id="performanceList"></tbody>
+      </table>
+
+      <!-- Add this section after the Performance Table -->
+      <h2 id="leaveApprovals">Leave Approvals</h2>
+      <table class="assigned-tasks-table">
+        <thead>
+          <tr>
+            <th>Employee</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Reason</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="leaveApprovalList"></tbody>
+      </table>
+      <h2 id="workReports">Work Reports</h2>
+      <table class="assigned-tasks-table">
+        <thead>
+          <tr>
+            <th>Employee</th>
+            <th>Report Name</th>
+            <th>Period</th>
+            <th>Hours</th>
+            <th>Status</th>
+            <th>Submitted On</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="workReportList"></tbody>
+      </table>
+
+      <div
+        id="reportActionModal"
+        style="
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.5);
+          z-index: 1000;
+        "
+      >
+        <div
+          style="
+            background: white;
+            width: 500px;
+            margin: 100px auto;
+            padding: 20px;
+            border-radius: 5px;
+          "
+        >
+          <h3>Update Report Status</h3>
+          <input type="hidden" id="currentReportId" />
+          <div class="input-group">
+            <label>Status:</label>
+            <select id="reportStatusAction">
+              <option value="Approved">Approve</option>
+              <option value="Rejected">Reject</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="managerComment">Comment:</label>
+            <textarea id="managerComment"></textarea>
+          </div>
+          <button onclick="submitReportAction()">Submit</button>
+          <button
+            onclick="document.getElementById('reportActionModal').style.display='none'"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let currentEmployeeId = null;
+let currentEmployeeName = null;
+      function loadMyTeam() {
+        let myTeam = JSON.parse(localStorage.getItem("myTeam")) || [];
+        const teamList = document.getElementById("myTeamList");
+        teamList.innerHTML = "";
+
+        myTeam.forEach((employee) => {
+          let row = document.createElement("tr");
+          row.innerHTML = `
+                    <td>${employee.name}</td>
+                    <td>${employee.email}</td>
+                    <td><button class="remove-btn" onclick="removeFromTeam('${employee._id}')">Remove</button></td>
+                `;
+          teamList.appendChild(row);
+        });
+      }
+
+      function addToTeam(employeeId, name, email) {
+        let myTeam = JSON.parse(localStorage.getItem("myTeam")) || [];
+        if (myTeam.some((emp) => emp._id === employeeId)) {
+          alert("Employee is already in your team!");
+          return;
+        }
+        myTeam.push({ _id: employeeId, name, email });
+        localStorage.setItem("myTeam", JSON.stringify(myTeam));
+        loadMyTeam();
+      }
+
+      
+      function removeFromTeam(employeeId) {
+        let myTeam = JSON.parse(localStorage.getItem("myTeam")) || [];
+        myTeam = myTeam.filter((emp) => emp._id !== employeeId);
+        localStorage.setItem("myTeam", JSON.stringify(myTeam));
+        loadMyTeam();
+      }
+      async function loadPerformanceData() {
+  const performanceList = document.getElementById("performanceList");
+  performanceList.innerHTML = ""; // Clear existing data
+
+  try {
+    const response = await fetch("/manager/allReviews");
+    const allReviews = await response.json();
+
+    if (!allReviews || allReviews.length === 0) {
+      performanceList.innerHTML = `
+        <tr>
+          <td colspan="4">No performance reviews found</td>
+        </tr>
+      `;
+      return;
+    }
+
+    // Display all reviews in the table
+    allReviews.forEach(review => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${review.employeeId?.name || 'Unknown Employee'}</td>
+        <td>${review.tasksCompleted}</td>
+        <td>${review.rating}</td>
+        <td>${review.reviewText}</td>
+      `;
+      performanceList.appendChild(row);
+    });
+
+  } catch (error) {
+    console.error("Error loading performance data:", error);
+    performanceList.innerHTML = `
+      <tr>
+        <td colspan="4">Error loading performance data</td>
+      </tr>
+    `;
+  }
+}
+      // Function to show review form for a specific employee
+function addReviewForm(employeeId, name) {
+  currentEmployeeId = employeeId;
+  currentEmployeeName = name;
+  document.getElementById("reviewFormContainer").style.display = "block";
+}
+
+// Function to cancel review
+function cancelReview() {
+  document.getElementById("reviewFormContainer").style.display = "none";
+  document.getElementById("reviewForm").reset();
+}
+
+      // Review form submission handler
+document.getElementById("reviewForm").addEventListener("submit", function (event) {
+  event.preventDefault();
+
+  const tasksCompleted = document.getElementById("tasksCompleted").value;
+  const averageRating = document.getElementById("averageRating").value;
+  const remarks = document.getElementById("remarks").value;
+
+  // Basic validation
+  if (!tasksCompleted || !averageRating || !remarks) {
+    alert("Please fill all fields");
+    return;
+  }
+
+  fetch("/manager/submitReview", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      employeeId: currentEmployeeId,
+      reviewText: remarks,
+      rating: Number(averageRating),
+      tasksCompleted: Number(tasksCompleted),
+    }),
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error("Failed to submit review");
+      return res.json();
+    })
+    .then((data) => {
+      alert(data.message || "Review submitted successfully");
+      document.getElementById("reviewFormContainer").style.display = "none";
+      document.getElementById("reviewForm").reset();
+      
+      // Only reload from server - don't try to add client-side
+      loadPerformanceData();
+    })
+    .catch((err) => {
+      alert(err.message);
+    });
+});
+      function loadTasks() {
+  const employeeId = document.getElementById("employee").value;
+  fetch(`/manager/tasks/${employeeId}`)
+    .then((response) => response.json())
+    .then((tasks) => {
+      const taskList = document.getElementById("taskList");
+      taskList.innerHTML = "";
+
+      tasks.forEach((task) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${task.employeeId.name}</td>
+          <td>${task.title}</td>
+          <td>${task.description}</td>
+          <td>${new Date(task.deadline).toLocaleString()}</td>
+          <td>
+            <select onchange="updateTaskStatus('${task._id}', this.value)">
+              <option value="Pending" ${task.status === 'Pending' ? 'selected' : ''}>Pending</option>
+              <option value="In Progress" ${task.status === 'In Progress' ? 'selected' : ''}>In Progress</option>
+              <option value="Completed" ${task.status === 'Completed' ? 'selected' : ''}>Completed</option>
+            </select>
+          </td>
+        `;
+        taskList.appendChild(row);
+      });
+    });
+}
+
+      document
+        .getElementById("assignTaskForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const employeeId = document.getElementById("employee").value;
+          const title = document.getElementById("title").value;
+          const description = document.getElementById("description").value;
+          const deadline = document.getElementById("deadline").value;
+
+          fetch("/manager/assignTask", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ employeeId, title, description, deadline }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.message) {
+                alert(data.message);
+
+                const taskList = document.getElementById("taskList");
+                const newTaskRow = document.createElement("tr");
+                newTaskRow.innerHTML = `
+                        <td>${data.employeeName}</td>
+                        <td>${data.task.title}</td>
+                        <td>${data.task.description}</td>
+                        <td>${data.task.deadline}</td>
+                        <td>${data.task.status}</td>
+                    `;
+                taskList.appendChild(newTaskRow);
+
+                document.getElementById("assignTaskForm").reset();
+              }
+            });
+        });
+
+        function updateTaskStatus(taskId, newStatus) {
+  fetch(`/manager/tasks/${taskId}/status`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ status: newStatus }),
+  })
+    .then(res => {
+      if (!res.ok) throw new Error('Failed to update status');
+      return res.json();
+    })
+    .then(data => {
+      alert(data.message);
+      // Optionally reload the tasks to reflect any other changes
+      loadTasks();
+    })
+    .catch(err => {
+      alert(err.message);
+    });
+}
+      function loadLeaveRequests() {
+        fetch("/manager/getLeaveRequests")
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log("Leave requests data:", data);
+            const leaveList = document.getElementById("leaveApprovalList");
+            leaveList.innerHTML = "";
+
+            if (data.leaves && data.leaves.length > 0) {
+              data.leaves.forEach((leave) => {
+                const status = leave.status || "Pending";
+
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                        <td>${leave.employeeName || leave.email}</td>
+                        <td>${new Date(
+                          leave.startDate
+                        ).toLocaleDateString()}</td>
+                        <td>${new Date(leave.endDate).toLocaleDateString()}</td>
+                        <td>${leave.reason || "No reason provided"}</td>
+                        <td>${status}</td>
+                        <td>
+                            ${
+                              status === "Pending"
+                                ? `
+                                <button class="approve-btn" onclick="approveLeave('${leave._id}')">Approve</button>
+                                <button class="reject-btn" onclick="rejectLeave('${leave._id}')">Reject</button>
+                            `
+                                : "Action completed"
+                            }
+                        </td>
+                    `;
+                leaveList.appendChild(row);
+              });
+            } else {
+              leaveList.innerHTML =
+                '<tr><td colspan="6">No leave requests found</td></tr>';
+            }
+          })
+          .catch((error) => {
+            console.error("Error loading leave requests:", error);
+            const leaveList = document.getElementById("leaveApprovalList");
+            leaveList.innerHTML =
+              '<tr><td colspan="6">Error loading leave requests</td></tr>';
+          });
+      }
+      function approveLeave(leaveId) {
+        updateLeaveStatus(leaveId, "Approved");
+      }
+
+      function rejectLeave(leaveId) {
+        updateLeaveStatus(leaveId, "Rejected");
+      }
+
+      function updateLeaveStatus(leaveId, status) {
+        fetch("/manager/updateLeaveStatus", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ leaveId, status }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              alert(`Leave ${status.toLowerCase()} successfully`);
+              loadLeaveRequests();
+            } else {
+              alert("Error updating leave status");
+            }
+          });
+      }
+      function formatDate(dateString) {
+        if (!dateString) return "N/A";
+        const date = new Date(dateString);
+        return date.toLocaleDateString();
+      }
+      function formatDateTime(dateString) {
+        if (!dateString) return "N/A";
+        const date = new Date(dateString);
+        return date.toLocaleString();
+      }
+
+      function getStatusColor(status) {
+        switch (status?.toLowerCase()) {
+          case "approved":
+            return "green";
+          case "rejected":
+            return "red";
+          default:
+            return "orange";
+        }
+      }
+      async function loadWorkReports() {
+        try {
+          const response = await fetch("/manager/workReports");
+          const data = await response.json();
+
+          console.log("Work reports response:", data); 
+
+          if (!response.ok || !data.success) {
+            throw new Error(data.error || "Failed to load work reports");
+          }
+
+          displayWorkReports(data.reports);
+        } catch (error) {
+          console.error("Error loading work reports:", error);
+          document.getElementById("workReportList").innerHTML =
+            '<tr><td colspan="7">Error loading work reports: ' +
+            error.message +
+            "</td></tr>";
+        }
+      }
+
+      // Display work reports in table
+      function displayWorkReports(reports) {
+        const tbody = document.getElementById("workReportList");
+
+        if (!reports || reports.length === 0) {
+          tbody.innerHTML =
+            '<tr><td colspan="7">No work reports found</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = reports
+          .map(
+            (report) => `
+    <tr>
+      <td>${report.employeeEmail || "N/A"}</td>
+      <td>${report.reportName || "N/A"}</td>
+      <td>${formatDate(report.startDate)} - ${formatDate(report.endDate)}</td>
+      <td>${report.totalHours || "N/A"}</td>
+      <td style="color: ${getStatusColor(report.status)}">
+        ${report.status || "Pending"}
+      </td>
+      <td>${formatDateTime(report.submittedAt)}</td>
+      <td>
+        ${
+          !report.status || report.status === "Pending"
+            ? `
+          <button onclick="showReportActionModal('${report._id}')">Review</button>
+        `
+            : `
+          ${report.managerComment || "No comment"}
+        `
+        }
+      </td>
+    </tr>
+  `
+          )
+          .join("");
+      }
+      function showReportActionModal(reportId) {
+        document.getElementById("currentReportId").value = reportId;
+        document.getElementById("reportActionModal").style.display = "block";
+      }
+      async function submitReportAction() {
+        const reportId = document.getElementById("currentReportId").value;
+        const status = document.getElementById("reportStatusAction").value;
+        const comment = document.getElementById("managerComment").value;
+
+        if (!reportId) {
+          alert("No report selected");
+          return;
+        }
+
+        try {
+          const response = await fetch("/manager/updateReportStatus", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              reportId,
+              status,
+              managerComment: comment,
+            }),
+          });
+
+          const data = await response.json();
+
+          if (!response.ok || !data.success) {
+            throw new Error(data.error || "Failed to update report status");
+          }
+          document.getElementById("reportActionModal").style.display = "none";
+          document.getElementById("managerComment").value = "";
+          loadWorkReports();
+        } catch (error) {
+          console.error("Error updating report status:", error);
+          alert("Failed to update report status: " + error.message);
+        }
+      }
+      document.addEventListener("DOMContentLoaded", function () {
+        loadTasks();
+        loadMyTeam();
+        loadPerformanceData();
+        loadLeaveRequests(); // Add this line
+        loadWorkReports();
+      });
+    </script>
+  </body>
+</html>

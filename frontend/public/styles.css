@@ -1,0 +1,500 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+    background-color: #c29b87;
+    margin: 0;
+    padding: 0;
+}
+header {
+    background: #2c3e50;
+    color: #fff;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    font-size: 24px;
+}
+.container {
+    width: 100%;
+    max-width: 1000px;
+    margin: 50px auto;
+    background: #f6f2ea;
+    padding: 40px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+/* Form Styles */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Buttons */
+button {
+    background-color: #34000b;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background-color: #34000b;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #333;
+    padding: 15px;
+    text-align: center;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+}
+
+.navbar a:hover {
+    background-color: #575757;
+    border-radius: 5px;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 1.5px;
+    background-color: #333;
+    color: white;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Role Selection Styles */
+.role-selection {
+    display: flex;
+    justify-content: center;
+    gap: 40px; /* Increases spacing between boxes */
+    margin-top: 50px;
+}
+
+/* Role Card - Bigger Size */
+.role-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 250px; /* Increased width */
+    height: 250px; /* Increased height to match width */
+    padding: 30px;
+    border-radius: 15px; /* Slightly rounded edges */
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 22px;
+    text-align: center;
+    justify-content: center;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    /* box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); */
+}
+
+/* Bigger Icons */
+.role-card img {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 5px;
+}
+
+/* Hover Effect */
+.role-card:hover {
+    transform: scale(1.08);
+}
+
+/* Role-Specific Colors */
+.hr {
+    background-color: #1e423f; /* Orange */
+}
+
+.admin {
+    background-color: #1e423f; /* Blue */
+}
+
+.employee {
+    background-color: #1e423f; /* Green */
+}
+.manager{
+    background-color: #1e423f;
+}
+/* Hover Effects */
+.hr:hover {
+    background-color: #1e423f;
+}
+
+.admin:hover {
+    background-color: #1e423f;
+}
+.manager:hover {
+    background-color: #1e423f;
+}
+.employee:hover {
+    background-color: #1e423f;
+}
+header {
+    background: #2c3e50;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+nav ul li {
+    display: inline;
+    margin-left: 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 8px 12px;
+    border-radius: 5px;
+}
+.sidebar {
+    width: 250px;
+    background: #34495e;
+    padding-top: 20px;
+    min-height: 100vh;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 15px 20px;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 16px;
+    display: block;
+}
+
+.sidebar ul li a:hover {
+    background: #1abc9c;
+    border-radius: 5px;
+}
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+th {
+    background: #2c3e50;
+    color: white;
+}
+/* Form Container (Only for Add/Edit HR & Manager Pages) */
+.add-hr, .edit-hr, .add-manager, .edit-manager {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+/* Form Box */
+.form-box {
+    background: #f6f2ea;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+}
+
+/* Form Fields */
+.form-box form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-box label {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: left;
+}
+
+.form-box input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Buttons */
+.btn-submit {
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s ease;
+}
+
+.btn-submit:hover {
+    background-color: #27ae60;
+}
+
+.btn-cancel {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none;
+    display: inline-block;
+    transition: 0.3s ease;
+}
+
+.btn-cancel:hover {
+    background-color: #c0392b;
+}
+
+/* Table Styling for HR & Manager List */
+.hr-table, .manager-table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+.hr-table th, .manager-table th, .hr-table td, .manager-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+}
+
+.hr-table th, .manager-table th {
+    background: #2c3e50;
+    color: white;
+}
+
+/* Buttons inside tables */
+.btn-edit, .btn-delete {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    color: white;
+}
+
+.btn-edit {
+    background-color: #f39c12;
+}
+
+.btn-edit:hover {
+    background-color: #e67e22;
+}
+
+.btn-delete {
+    background-color: #e74c3c;
+}
+
+.btn-delete:hover {
+    background-color: #c0392b;
+}
+.admin-dashboard {
+    background:  #f8f1eb;;
+    min-height: 100vh;
+    display: flex;
+}
+
+/* Navbar */
+.admin-dashboard header {
+    background:#34000b;
+    color: white;
+    padding: 15px 30px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+/* Navbar Links */
+.admin-dashboard nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    padding-right: 20px;
+}
+
+.admin-dashboard nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Sidebar - Fixed Position */
+.admin-dashboard .sidebar {
+    width: 250px;
+    background: #34000b;
+    padding: 20px;
+    position: fixed;
+    left: 0;
+    top: 60px;
+    bottom: 0;
+    min-height: calc(100vh - 60px);
+    color: white;
+    overflow-y: auto;
+}
+
+/* Sidebar Links */
+.admin-dashboard .sidebar ul {
+    padding: 0;
+    list-style: none;
+}
+
+.admin-dashboard .sidebar ul li {
+    padding: 12px 0;
+}
+
+.admin-dashboard .sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.admin-dashboard .sidebar ul li a:hover {
+    background: #a67b68;
+    transition: 0.3s ease;
+}
+
+/* Main Content */
+/* Ensure Full-Width Background for Dashboard Overview */
+.admin-dashboard .dashboard-container {
+    background:  #f8f1eb;
+    padding: 40px;
+    border-radius: 12px;
+    width: 100%; /* Make it take full width */
+    max-width: none; /* Remove width limitation */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Ensure Main Content Fills the Full Width */
+.admin-dashboard .content {
+    flex: 1;
+    padding: 80px 40px;
+    background: #f8f1eb;
+    margin-left: 250px;
+    min-height: 100vh;
+    width: calc(100% - 250px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+
+/* Cards Layout */
+.admin-dashboard .overview-section {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    width: 100%;
+}
+
+/* Card Styling */
+.admin-dashboard .card {
+    background: #c29b87;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    width: 220px;
+    height: 130px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s ease;
+}
+
+/* Card Hover Effect */
+.admin-dashboard .card:hover {
+    transform: scale(1.05);
+}
+
+/* Card Text Styling */
+.admin-dashboard .card h2 {
+    font-size: 18px;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.admin-dashboard .card p {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Colors for Cards */
+.admin-dashboard .card:nth-child(1) { background: #34000b; }
+.admin-dashboard .card:nth-child(2) { background: #6b4034; }
+.admin-dashboard .card:nth-child(3) { background: #a67b68; }
+.admin-dashboard .card:nth-child(4) { background: #c29b87; }

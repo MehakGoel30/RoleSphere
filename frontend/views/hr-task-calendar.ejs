@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HR Task Calendar</title>
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f7f6;
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .sidebar {
+      width: 200px;
+      height: 100vh;
+      background: #34000b;
+      padding: 20px;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+    }
+
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      padding: 10px;
+      display: block;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      transition: background 0.3s;
+    }
+
+    .sidebar a:hover {
+      background: #34000b;
+    }
+
+    .main-content {
+      margin-left: 250px;
+      flex-grow: 1;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .navbar {
+      background: #34000b;
+      padding: 15px;
+      color: #fff;
+      font-size: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 10px;
+      margin-bottom: 30px;
+    }
+
+    .navbar a {
+      color: #34000b;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 20px;
+      padding: 8px 15px;
+      background-color: white;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+
+    .navbar a:hover {
+      background-color: #34000b;
+      color: white;
+    }
+
+    h1 {
+      color: #34000b;
+      text-align: center;
+    }
+
+    #calendar {
+      max-width: 900px;
+      margin: 30px auto;
+      background-color: white;
+      padding: 15px;
+      border-radius: 10px;
+      max-height: 400px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10000;  
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background: rgba(0,0,0,0.5);
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 10% auto;
+      padding: 20px;
+      border-radius: 8px;
+      width: 400px;
+    }
+
+    .modal-content h2 {
+      margin-bottom: 15px;
+      color: #34000b;
+    }
+
+    .modal-content label {
+      display: block;
+      margin-top: 10px;
+    }
+
+    .modal-content input, .modal-content textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+    }
+
+    .modal-content button {
+      margin-top: 15px;
+      background-color: #34000b;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .close-btn {
+      float: right;
+      cursor: pointer;
+      color: #34000b;
+      font-size: 20px;
+    }
+
+    .close-btn:hover {
+      color: black;
+    }
+
+    .completion-modal-content {
+      background-color: #fff;
+      margin: 10% auto;
+      padding: 20px;
+      border-radius: 8px;
+      width: 400px;
+    }
+
+    .completion-modal-content h2 {
+      margin-bottom: 15px;
+      color: #34000b;
+    }
+
+    .completion-modal-content button {
+      margin-top: 10px;
+      background-color: #34000b;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .fc .fc-button {
+      background-color: white;
+      color: #34000b;
+      border: 1px solid #34000b;
+    }
+
+    .fc .fc-button:hover {
+      background-color: #34000b;
+      color: white;
+    }
+
+    .fc .fc-daygrid-day.fc-day-today {
+      background-color: #ffe6e9;
+      border: 2px solid #34000b !important;
+      box-sizing: border-box;
+    }
+
+    .fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
+      font-weight: bold;
+      color: #34000b;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <h3>HR Panel</h3>
+    <a href="/hr/hr-Dashboard">Dashboard</a>
+    <a href="/hr/task-calendar">Task Calendar</a>
+    <a href="/hr/hiring">Hire Employees</a>
+    <a href="/hr/announcements" id="announcementHeader">Company Announcements</a>
+  </div>
+
+  <div class="main-content">
+    <div class="navbar">
+      <span>HR Dashboard</span>
+      <a href="/hr/logout">Logout</a>
+    </div>
+
+    <h1>Assign Tasks to Managers</h1>
+    <div id="calendar"></div>
+
+    <!-- Task Modal -->
+    <div id="taskModal" class="modal">
+      <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <h2>Add Task</h2>
+        <form id="taskForm">
+          <input type="hidden" id="taskDate">
+          <label>Manager Name:</label>
+          <input type="text" id="managerName" required>
+          <label>Task Description:</label>
+          <textarea id="taskDescription" rows="4" required></textarea>
+          <button type="submit">Add Task</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Completion Modal -->
+    <div id="completionModal" class="modal">
+      <div class="completion-modal-content">
+        <span class="close-btn" onclick="closeCompletionModal()">&times;</span>
+        <h2>Task Details</h2>
+        <p id="taskInfo"></p>
+        <button id="markCompletedButton" onclick="markCompleted()">Mark as Completed</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+  <!-- <script>
+    let calendar;
+    let selectedEvent = null;
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const calendarEl = document.getElementById('calendar');
+
+      calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        selectable: true,
+
+        dateClick: function (info) {
+          document.getElementById('taskDate').value = info.dateStr;
+          document.getElementById('taskModal').style.display = 'block';
+        },
+
+        eventClick: function (info) {
+          selectedEvent = info.event;
+          document.getElementById('taskInfo').innerText = selectedEvent.title;
+          document.getElementById('completionModal').style.display = 'block';
+        },
+
+        events: [],
+      });
+
+      calendar.render();
+    });
+
+    // Fix: Correct IDs used here
+    document.getElementById('taskForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const date = document.getElementById('taskDate').value;
+      const manager = document.getElementById('managerName').value;
+      const description = document.getElementById('taskDescription').value;
+
+      fetch('/hr/add-task', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ date, manager, description })
+      })
+      .then(res => res.json())
+      .then(data => {
+        calendar.addEvent({
+          title: ${manager}: ${description},
+          start: date,
+          allDay: true
+        });
+        closeModal(); // Close modal after adding task
+      })
+      .catch(error => {
+        alert('Failed to add task');
+        console.error(error);
+      });
+    });
+
+    function closeModal() {
+      document.getElementById('taskModal').style.display = 'none';
+    }
+
+    function closeCompletionModal() {
+      document.getElementById('completionModal').style.display = 'none';
+    }
+
+    function markCompleted() {
+      if (selectedEvent) {
+        selectedEvent.setProp('title', '✅ ' + selectedEvent.title);
+        selectedEvent.setProp('backgroundColor', '#7ed957');
+        selectedEvent.setProp('borderColor', '#7ed957');
+      }
+      closeCompletionModal();
+    }
+  </script> -->
+  <script>
+  let calendar;
+  let selectedEvent = null;
+  let selectedTaskId = null; // Store task ID for completion update
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const calendarEl = document.getElementById('calendar');
+
+    calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      selectable: true,
+
+      dateClick: function (info) {
+        document.getElementById('taskDate').value = info.dateStr;
+        document.getElementById('managerName').value = '';
+        document.getElementById('taskDescription').value = '';
+        document.getElementById('taskModal').style.display = 'block';
+      },
+
+      eventClick: function (info) {
+        selectedEvent = info.event;
+        // Extract task ID from event extendedProps
+        selectedTaskId = selectedEvent.extendedProps.taskId;
+
+        document.getElementById('taskInfo').innerText = selectedEvent.title;
+        document.getElementById('completionModal').style.display = 'block';
+      },
+
+      events: function(fetchInfo, successCallback, failureCallback) {
+        fetch('/hr/tasks')
+          .then(res => res.json())
+          .then(tasks => {
+            const events = tasks.map(task => ({
+              id: task._id,
+              title: task.completed ? '✅ ' + task.manager + ': ' + task.description : task.manager + ': ' + task.description,
+              start: task.date,
+              allDay: true,
+              taskId: task._id,
+              backgroundColor: task.completed ? '#7ed957' : undefined,
+              borderColor: task.completed ? '#7ed957' : undefined
+            }));
+            successCallback(events);
+          })
+          .catch(() => failureCallback());
+      }
+    });
+
+    calendar.render();
+  });
+
+  document.getElementById('taskForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const date = document.getElementById('taskDate').value;
+    const manager = document.getElementById('managerName').value;
+    const description = document.getElementById('taskDescription').value;
+
+    fetch('/hr/add-task', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ date, manager, description })
+    })
+    .then(res => res.json())
+    .then(data => {
+      // Add event to calendar with taskId
+      // calendar.addEvent({
+      //   id: data.task._id,
+      //   title: ${manager}: ${description},
+      //   start: date,
+      //   allDay: true,
+      //   taskId: data.task._id
+      // });
+      calendar.refetchEvents();
+      closeModal();
+    })
+    .catch(error => {
+      alert('Failed to add task');
+      console.error(error);
+    });
+  });
+
+  function closeModal() {
+    document.getElementById('taskModal').style.display = 'none';
+  }
+
+  function closeCompletionModal() {
+    document.getElementById('completionModal').style.display = 'none';
+  }
+
+  function markCompleted() {
+    if (!selectedTaskId) {
+      alert('Task ID not found!');
+      return;
+    }
+
+    fetch('/hr/complete-task', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ taskId: selectedTaskId })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.message) {
+        selectedEvent.setProp('title', '✅ ' + selectedEvent.title.replace(/^✅\s*/, '')); // Avoid double check marks
+        selectedEvent.setProp('backgroundColor', '#7ed957');
+        selectedEvent.setProp('borderColor', '#7ed957');
+      } else if (data.error) {
+        alert(data.error);
+      }
+      closeCompletionModal();
+    })
+    .catch(() => {
+      alert('Failed to mark task completed');
+      closeCompletionModal();
+    });
+  }
+</script>
+</body>
+</html>

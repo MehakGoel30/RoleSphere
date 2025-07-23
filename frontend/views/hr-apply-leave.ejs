@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Apply Leave</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f7f6;
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .sidebar {
+      width: 200px;
+      height: 100vh;
+      background: #34000b;
+      padding: 20px;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+    }
+
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      padding: 10px;
+      display: block;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      transition: background 0.3s;
+    }
+
+    .sidebar a:hover {
+      background: #34000b;
+    }
+
+    .main-content {
+      margin-left: 250px;
+      flex-grow: 1;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .navbar {
+      background: #34000b;
+      padding: 15px;
+      color: #fff;
+      font-size: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 10px;
+      margin-bottom: 30px;
+    }
+
+    .navbar a {
+      color: #34000b;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 20px;
+      padding: 8px 15px;
+      background-color: white;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+
+    .navbar a:hover {
+      background-color: #34000b;
+      color: white;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: rgb(240, 228, 228);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
+      text-align: center;
+    }
+
+    h1 {
+      color: #34000b;
+      font-size: 32px;
+      text-align: center;
+    }
+
+    label {
+      font-size: 18px;
+      color: #34000b;
+    }
+
+    textarea, input[type="date"] {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #bdc3c7;
+      font-size: 16px;
+      resize: vertical;
+      margin-top: 8px;
+    }
+
+    button {
+      background-color: #34000b;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      font-size: 18px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background-color: #34000b;
+    }
+
+    .form-container {
+      display: none;
+      margin-top: 30px;
+      padding: 20px;
+      background: rgb(240, 228, 228);
+      border-radius: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      border: 1px solid #bdc3c7;
+      padding: 12px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #34000b;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <h3>HR Panel</h3>
+    <a href="/hr/hr-Dashboard">Dashboard</a>
+    <a href="/hr/task-calendar">Task Calendar</a>
+    <a href="/hr/hiring">Hire Employees</a>
+    <a href="/hr/announcements" id="announcementHeader">Company Announcements</a>
+
+  </div>
+
+  <div class="main-content">
+    <div class="navbar">
+      <span>Leave Apllication Form</span>
+      <a href="/hr/logout">Logout</a>
+    </div>
+
+    <div class="container">
+      <h1>Apply for Leave</h1>
+      <form id="leaveForm">
+        <label for="from">From Date:</label>
+        <input type="date" name="from" id="from" required><br><br>
+
+        <label for="to">To Date:</label>
+        <input type="date" name="to" id="to" required><br><br>
+
+        <label for="reason">Reason:</label><br>
+        <textarea name="reason" id="reason" rows="5" required></textarea><br><br>
+
+        <button type="submit">Submit</button>
+      </form>
+
+      <div id="leaveDetails" class="form-container">
+        <h2>Submitted Leave Details</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>From</th>
+              <th>To</th>
+              <th>Reason</th>
+            </tr>
+          </thead>
+          <tbody id="leaveTableBody">
+            <!-- Leave rows will be added here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('leaveForm').addEventListener('submit', function (event) {
+      event.preventDefault(); // Prevent form submission
+
+      const from = document.getElementById('from').value;
+      const to = document.getElementById('to').value;
+      const reason = document.getElementById('reason').value;
+
+      const tableBody = document.getElementById('leaveTableBody');
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${from}</td>
+        <td>${to}</td>
+        <td>${reason}</td>
+      `;
+      tableBody.appendChild(row);
+
+      // Show the leave details section
+      document.getElementById('leaveDetails').style.display = 'block';
+
+      // Reset the form
+      document.getElementById('leaveForm').reset();
+    });
+  </script>
+</body>
+</html>

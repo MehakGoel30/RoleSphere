@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="admin-dashboard">
+    <!-- Header -->
+    <header>
+        <h1>Welcome, <%= admin && admin.name ? admin.name : "Admin" %></h1>
+        <nav>
+            <ul>
+                <li><a href="/api/admin/manage-users">Manage Users</a></li>
+                <li><a href="/api/admin/reports">View Reports</a></li>
+                <li><a href="/api/admin/settings">Settings</a></li>
+                <li><a href="/api/admin/logout">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Sidebar + Main Content -->
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <ul>
+                <li><a href="/api/admin/add-hr">➕ Add HR</a></li>
+                <li><a href="/api/admin/add-manager">➕ Add Manager</a></li>
+                <li><a href="/api/admin/manage-users">👤 Manage Users</a></li>
+                <li><a href="/api/admin/announcements">📢 Announcements</a></li>
+                <li><a href="/api/admin/mark-attendance">📝 Mark Attendance</a></li>
+                <li><a href="/api/admin/logout">🚪 Logout</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <h2>Dashboard Overview</h2>
+            <p>Select an option from the sidebar...</p>
+
+            <% if (message && message.trim() !== "") { %>
+                <div class="alert"><%= message %></div>
+            <% } %>
+
+            <div class="dashboard-container">
+                <div class="overview-section">
+                    <div class="card">
+                        <h2>Total Employees</h2>
+                        <p><%= totalEmployees %></p>
+                    </div>
+                    <div class="card">
+                        <h2>Present Today</h2>
+                        <p><%= presentToday %></p>
+                    </div>
+                    <div class="card">
+                        <h2>Absent Today</h2>
+                        <p><%= absentToday %></p>
+                    </div>
+                    <div class="card">
+                        <h2>Pending Approvals</h2>
+                        <p><%= pendingApprovals %></p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
